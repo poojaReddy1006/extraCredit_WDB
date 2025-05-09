@@ -39,7 +39,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${PORT}`,
+        url: `https://webdb-extracredit-api.onrender.com`,
       },
     ],
   },
