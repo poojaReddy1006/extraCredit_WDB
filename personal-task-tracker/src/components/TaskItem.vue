@@ -2,10 +2,16 @@
   <div class="task-card">
     <div v-if="!isEditing">
       <div>{{ task.title }}</div>
-      <div v-if="task.completed">✔️</div>
-      <div v-else = "!task.completed">❌</div>
-      <button @click="editTask">Edit</button>
-      <button @click="deleteTask">Delete</button>
+      <div class="status-row">
+        <span class="status-label">Status:</span>
+        <span class="status-value" :class="{ completed: task.completed, notCompleted: !task.completed }">
+          {{ task.completed ? '✔️ Completed' : '❌ Not Completed' }}
+        </span>
+      </div>
+      <div class="button-group">
+        <button class="edit-btn" @click="editTask(task._id)">✏️ Edit</button>
+        <button class="delete-btn" @click="deleteTask(task._id)">🗑️ Delete</button>
+      </div>
     </div>
 
     <div v-if="isEditing">
@@ -31,37 +37,36 @@ export default {
   },
   data() {
     return {
-      isEditing: false // To track whether the task is being edited or not
+      isEditing: false
     };
   },
   methods: {
-    // Trigger the edit form
+
     editTask() {
       this.isEditing = true;
       this.$emit('edit-task', this.task);
     },
 
-    // Save the edited task and emit the event to the parent
     saveEdit() {
       this.isEditing = false;
-      this.$emit('edit-task', this.task); // Emit the updated task back to the parent
+      this.$emit('edit-task', this.task);
     },
 
-    // Cancel editing and revert changes
+
     cancelEdit() {
       this.isEditing = false;
     },
 
-    // Trigger the delete event
+
     deleteTask() {
-      this.$emit('delete-task', this.task._id); // Emit the task ID for deletion
+      this.$emit('delete-task', this.task._id);
     }
   }
-  }
-  </script>
-  
-  <style scoped>
-  .task-card {
+}
+</script>
+
+<style scoped>
+.task-card {
   background-color: khaki;
   padding: 4rem;
   border: 1px solid #ddd;
@@ -97,6 +102,74 @@ button:hover {
   background-color: #0056b3;
 }
 
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
 
-  </style>
+.status-label {
+  color: #333;
+}
+
+.status-value {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.status-value.completed {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-value.notCompleted {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.button-group {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.edit-btn {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+.edit-btn:hover {
+  background-color: #b2ebf2;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.delete-btn:hover {
+  background-color: #ffcdd2;
+  transform: scale(1.05);
+}
+
+
+
+
+  
+</style>
   

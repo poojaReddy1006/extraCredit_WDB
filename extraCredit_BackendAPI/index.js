@@ -28,7 +28,6 @@ mongoose.connect('mongodb+srv://pooja:Education%401@cluster0.xw8x3l3.mongodb.net
 .catch((err) => console.error('MongoDB connection error:', err));
 
 
-// Swagger setup
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',

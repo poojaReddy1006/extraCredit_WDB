@@ -1,13 +1,16 @@
 <template>
- <div class="app-container">
+  <div class="app-container">
     <header class="header">
       <div class="title">📝 Personal Task Tracker</div>
+      <button class="dark-toggle" @click="toggleDarkMode">
+        {{ isDarkMode ? '🌙 Dark' : '☀️ Light' }}
+      </button>
     </header>
     <main class="main">
       <!-- Router-view will handle rendering of Home component -->
       <router-view />
     </main>
-    <footer class="footer">Made with ❤️ by Pooja</footer>
+    <footer class="footer"></footer>
   </div>
 </template>
 
@@ -16,7 +19,22 @@ import { RouterLink } from 'vue-router';
 export default {
   name: 'App',
   components: {
-    RouterLink, // Import the RouterLink component
+    RouterLink, 
+  },
+  data() {
+    return {
+      isDarkMode: false,
+    };
+  },
+  methods: {
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode;
+      if (this.isDarkMode) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    },
   },
 
 };
@@ -24,35 +42,33 @@ export default {
 </script>
 
 <style scoped>
-/* Ensure the body and html take up the full height */
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
   width: 100%;
-  /* height: 100%; */
 }
 
-/* Full viewport height container */
 .app-container {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr;
-  min-height: 100vh; 
+  min-height: 100vh;
   grid-template-areas:
     "header"
     "main"
     "footer";
-    min-height: 100vh;
-    width: 100%;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .header {
   grid-area: header;
-  background-color: #4a90e2;
+  background-color: brown;
   color: white;
   display: grid;
-  grid-template-columns: 1fr auto; /* Title on left and button on the right */
-  align-items: center; /* Vertically center the content */
+  grid-template-columns: 1fr auto;
+  align-items: center;
   padding: 1rem;
 }
 
@@ -78,7 +94,7 @@ html, body {
 
 .main {
   grid-area: main;
-  background-color: azure;
+  background-color: beige;
   color: white;
   padding: 1rem;
   font-size: 1.5rem;
@@ -86,18 +102,10 @@ html, body {
   color: black;
 }
 
-.footer {
-  grid-area: footer;
-  background-color: #eee;
-  text-align: center;
-  padding: 0.75rem;
-  font-size: 0.9rem;
-}
 
-/* Responsive Design */
 @media (min-width: 768px) {
   .app-container {
-    grid-template-columns: 1fr 3fr; /* Two columns for medium screens */
+    grid-template-columns: 1fr 3fr;
     grid-template-areas:
       "header header"
       "main main"
@@ -113,7 +121,37 @@ html, body {
 
 @media (min-width: 1024px) {
   .app-container {
-    grid-template-columns: 1fr 4fr; 
+    grid-template-columns: 1fr 4fr;
   }
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .header {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .main {
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+
+body.dark-mode .footer {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .add-task-btn,
+body.dark-mode .dark-toggle {
+  background-color: #444;
+  color: #fff;
+}
+
+body.dark-mode .add-task-btn:hover,
+body.dark-mode .dark-toggle:hover {
+  background-color: #333;
 }
 </style>

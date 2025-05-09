@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <button @click="showForm = true; showTasks = false">➕ Add Task</button>
+    <button @click="showForm = true; showTasks = false" style="border-radius: 5px;">➕ Add Task</button>
     <Filter @change-filter="setFilter" />
 
 
@@ -54,7 +54,7 @@ export default {
     // Fetch tasks from API
     async fetchTasks() {
       try {
-        const response = await fetch('http://localhost:7128/api/tasks');
+        const response = await fetch('https://webdb-extracredit-api.onrender.com/api/tasks');
         if (!response.ok) {
           throw new Error('Failed to fetch tasks');
         }
@@ -71,7 +71,7 @@ export default {
 
         if (taskData._id) {
           // If _id exists, it's an update
-          response = await fetch(`http://localhost:7128/api/tasks/${taskData._id}`, {
+          response = await fetch(`https://webdb-extracredit-api.onrender.com/api/tasks/${taskData._id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export default {
           });
         } else {
           // No _id means it's a new task
-          response = await fetch('http://localhost:7128/api/tasks', {
+          response = await fetch('https://webdb-extracredit-api.onrender.com/api/tasks', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -128,7 +128,7 @@ export default {
     // Delete task from the list
     async deleteTask(taskId) {
       try {
-        const response = await fetch(`http://localhost:7128/api/tasks/${taskId}`, {
+        const response = await fetch(`https://webdb-extracredit-api.onrender.com/api/tasks/${taskId}`, {
           method: 'DELETE',
         });
 

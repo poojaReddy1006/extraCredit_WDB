@@ -2,7 +2,8 @@
   <div class="task-form">
     <h3>{{ task ? 'Edit Task' : 'Add New Task' }}</h3>
     <form @submit.prevent="submitForm">
-      <input v-model="title" placeholder="Task title" style="width: -webkit-fill-available;" required />
+      <input v-model="title" placeholder="Task title"
+        style="width: -webkit-fill-available; height: 40px; border-radius: 5px;" required />
       <label class="checkbox-label">
         <input type="checkbox" v-model="completed" />
         Completed
@@ -31,23 +32,23 @@ export default {
     }
   },
   methods: {
-  submitForm() {
-    const taskData = {
-      title: this.title,
-      completed: this.completed
-    }
+    submitForm() {
+      const taskData = {
+        title: this.title,
+        completed: this.completed
+      }
 
-    // Only include _id if editing an existing task
-    if (this.task && this.task._id !== undefined) {
-      taskData._id = this.task._id
-    }
+      // Only include _id if editing an existing task
+      if (this.task && this.task._id !== undefined) {
+        taskData._id = this.task._id
+      }
 
-    this.$emit('submit-task', taskData)
-  },
-  cancel() {
+      this.$emit('submit-task', taskData)
+    },
+    cancel() {
       this.$emit('cancel-form')
     }
-}
+  }
 }
 </script>
 
@@ -68,6 +69,7 @@ export default {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
+  background-color: lightblue;
 }
 
 input[type="text"] {
