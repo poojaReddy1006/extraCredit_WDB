@@ -1,2 +1,8 @@
 Project Description:
 Personal Task Tracker is a responsive task management web application built using Vue.js. It enables users to efficiently manage their daily activities by allowing them to add, edit, delete, and categorize tasks. The application features a clean user interface with support for both light and dark modes, making it suitable for various environments and user preferences. With built-in support for completion status, the tracker helps users stay organized and focused on their goals.
+
+To Run node(Backend API):
+node index.js
+
+To run vue(frontend):
+npm run serve
