@@ -74,8 +74,22 @@ router.get('/', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
-    const lastTask = await Task.findOne().sort({ _id: -1 }); // get last task's ID
-    const newId = lastTask ? (parseInt(lastTask._id, 10) + 1).toString() : "1";
+    const lastTask = await Task.aggregate([
+      {
+        $addFields: {
+          numericId: { $toInt: "$_id" }
+        }
+      },
+      {
+        $sort: { numericId: -1 }
+      },
+      {
+        $limit: 1
+      }
+    ]);
+
+    const lastNumericId = lastTask.length > 0 ? lastTask[0].numericId : 0;
+    const newId = (lastNumericId + 1).toString();
 
     const newTask = new Task({
       _id: newId,
@@ -89,6 +103,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 /**
